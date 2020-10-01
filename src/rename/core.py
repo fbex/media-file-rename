@@ -3,7 +3,7 @@ import re
 import sys
 from typing import List
 
-import tmdb.client
+import tmdb.client as tmdb_client
 from common import args
 from common.model import MediaType, TvMediaItem
 
@@ -46,11 +46,11 @@ def _detect_media_in_file(filename: str) -> TvMediaItem:
 
 
 def _enrich_media_items(media_items: List[TvMediaItem]):
-    tmdb_item = tmdb.client.find(media_items[0])
+    tmdb_item = tmdb_client.find(media_items[0])
     if tmdb_item.type is MediaType.tv:
-        episodes = tmdb.client.get_episodes_for_season(tmdb_item, media_items[0].season_number)
+        episodes = tmdb_client.get_episodes_for_season(tmdb_item, media_items[0].season_number)
         for item in media_items:
-            item.episode_name = tmdb.client.find_episode_by_number(int(item.episode_number), episodes).name
+            item.episode_name = tmdb_client.find_episode_by_number(int(item.episode_number), episodes).name
 
 
 def _rename_items(media_items: List[TvMediaItem]):
