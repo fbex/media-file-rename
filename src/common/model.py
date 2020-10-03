@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
-_tv_file_output_pattern = '{name} - s{season}e{episode} - {episode_name}.{extension}'
+_tv_file_output_pattern = \
+    '{name} - s{season}e{episode} - {episode_name}.{extension}'
 
 
 @dataclass
@@ -17,9 +18,11 @@ class TvMediaItem:
         return self.episode_number
 
     def filename(self) -> str:
-        return _tv_file_output_pattern \
-            .format(name=self.name, season=self.season_number, episode=self.episode_number,
-                    episode_name=self.episode_name, extension=self.file_extension)
+        return _tv_file_output_pattern.format(name=self.name,
+                                              season=self.season_number,
+                                              episode=self.episode_number,
+                                              episode_name=self.episode_name,
+                                              extension=self.file_extension)
 
 
 class MediaType(Enum):
