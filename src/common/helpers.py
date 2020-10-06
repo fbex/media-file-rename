@@ -1,6 +1,6 @@
-from common import args
+from common.settings import is_verbose_enabled
 
 
 def verbose_print(text: str):
-    if args.verbose:
+    if is_verbose_enabled():
         print(text)
