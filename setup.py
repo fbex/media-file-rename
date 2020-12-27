@@ -5,6 +5,9 @@ from setuptools import find_packages, setup
 here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
 
+install_requires = ['requests']
+tests_require = ['pytest', 'pytest-mock', 'responses']
+
 setup(
     name="media_file_rename",
     version="0.0.1",
@@ -20,17 +23,17 @@ setup(
         'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3 :: Only',
     ],
     keywords='media, file, rename, tmdb, movie, tv, show',
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
-    python_requires='>=3.5, <4',
-    install_requires=['requests'],
+    python_requires='>=3.7, <4',
+    install_requires=install_requires,
+    tests_require=tests_require,
     entry_points={
         "console_scripts": [
             "media-rename = rename.__main__:main"
