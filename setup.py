@@ -9,15 +9,17 @@ install_requires = ['requests']
 tests_require = ['pytest', 'pytest-mock', 'responses']
 
 setup(
-    name="media_file_rename",
+    name="renamedia",
     version="0.0.1",
-    description='Rename media files inside a directory',
+    description='Rename media files inside a given directory',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/fbex/media-file-rename',
     author='fbex',
     author_email='fbex@github.com',
     classifiers=[
+        # complete classifier list:
+        # http://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
@@ -36,7 +38,7 @@ setup(
     tests_require=tests_require,
     entry_points={
         "console_scripts": [
-            "media-rename = rename.__main__:main"
+            "renamedia = rename.__main__:main"
         ]
     },
 )
