@@ -10,7 +10,7 @@ Note that the script currently only supports TV shows and no movies.
 Requires a TMDB api key in an environment variable: `export TMDB_API_KEY=<api-key>`.
 To get an API key, simply register an account at https://www.themoviedb.org.
 
-Set up a venv and install this package: `pip install .`
+Set up a venv (e.g. with pyenv-virtualenv) and install this package: `pip install .`
 
 Run the module with `python -m rename` or the console script with `media-rename` from within the venv.
 
