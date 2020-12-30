@@ -1,5 +1,8 @@
 # media-file-rename
 
+[![CI](https://github.com/fbex/media-file-rename/workflows/CI/badge.svg?branch=master)](https://github.com/fbex/media-file-rename/actions?workflow=CI)
+[![codecov](https://codecov.io/gh/fbex/media-file-rename/branch/master/graph/badge.svg?token=L1ow3vRrMR)](https://codecov.io/gh/fbex/media-file-rename)
+
 A script to detect media files inside a given directory and rename them by a certain pattern.
 Media files are enriched with information from TMDB.
 
