@@ -1,5 +1,6 @@
 include pyproject.toml
 include *.md
+include *.yml
 include LICENSE.txt
 include .coveragerc
 recursive-include data *
