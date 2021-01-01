@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from common.model import MediaType
+from renamedia.common.model import MediaType
 
 
 @dataclass

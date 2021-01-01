@@ -1,4 +1,4 @@
-from common.settings import is_verbose_enabled
+from renamedia.common.settings import is_verbose_enabled
 
 
 def verbose_print(text: str):

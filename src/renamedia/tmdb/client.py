@@ -5,9 +5,9 @@ from typing import Dict, List
 import requests
 from requests import Response
 
-from common.helpers import verbose_print
-from common.model import TvMediaItem
-from tmdb.model import MediaType, TmdbItem, TvEpisode
+from renamedia.common.helpers import verbose_print
+from renamedia.common.model import TvMediaItem
+from renamedia.tmdb.model import MediaType, TmdbItem, TvEpisode
 
 _TMDB_URL = 'https://api.themoviedb.org/3'
 

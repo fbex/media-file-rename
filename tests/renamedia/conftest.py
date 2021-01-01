@@ -2,8 +2,8 @@ from typing import List
 
 import pytest
 
-from common.model import MediaType, TvMediaItem
-from tmdb.model import TmdbItem, TvEpisode
+from renamedia.common.model import MediaType, TvMediaItem
+from renamedia.tmdb.model import TmdbItem, TvEpisode
 
 
 @pytest.fixture

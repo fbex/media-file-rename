@@ -5,11 +5,11 @@ import re
 
 from setuptools import find_packages, setup
 
-here = pathlib.Path(__file__).parent.resolve()
-long_description = (here / 'README.md').read_text(encoding='utf-8')
-
-install_requires = ['requests']
-tests_require = ['pytest', 'pytest-mock', 'responses']
+NAME = "renamedia"
+HERE = pathlib.Path(__file__).parent.resolve()
+LONG_DESCRIPTION = (HERE / 'README.md').read_text(encoding='utf-8')
+INSTALL_REQUIRES = ['requests']
+TESTS_REQUIRE = ['pytest', 'pytest-mock', 'responses']
 
 
 def read(*parts):
@@ -19,18 +19,6 @@ def read(*parts):
     """
     with codecs.open(os.path.join(HERE, *parts), "rb", "utf-8") as f:
         return f.read()
-
-
-NAME = "renamedia"
-
-HERE = os.path.abspath(os.path.dirname(__file__))
-
-try:
-    META_PATH
-except NameError:
-    META_PATH = os.path.join(HERE, "src/rename", "__init__.py")
-finally:
-    META_FILE = read(META_PATH)
 
 
 def find_meta(meta):
@@ -45,11 +33,18 @@ def find_meta(meta):
     raise RuntimeError("Unable to find __{meta}__ string.".format(meta=meta))
 
 
+try:
+    META_PATH
+except NameError:
+    META_PATH = os.path.join(HERE, "src", NAME, "__init__.py")
+finally:
+    META_FILE = read(META_PATH)
+
 setup(
-    name="renamedia",
+    name=NAME,
     version=find_meta("version"),
     description='Rename media files inside a given directory',
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
     url='https://github.com/fbex/media-file-rename',
     author='fbex',
@@ -71,8 +66,8 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     python_requires='>=3.7, <4',
-    install_requires=install_requires,
-    tests_require=tests_require,
+    install_requires=INSTALL_REQUIRES,
+    tests_require=TESTS_REQUIRE,
     entry_points={
         "console_scripts": [
             "renamedia = rename.__main__:main"
