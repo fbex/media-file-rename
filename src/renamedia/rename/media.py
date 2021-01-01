@@ -2,9 +2,9 @@ import re
 import sys
 from typing import List, Optional
 
-import tmdb.client as tmdb_client
-from common.model import MediaType, TvMediaItem
-from tmdb.model import TvEpisode
+import renamedia.tmdb.client as tmdb_client
+from renamedia.common.model import MediaType, TvMediaItem
+from renamedia.tmdb.model import TvEpisode
 
 _media_detection_regex = '.+?(?=.[sS]([0-9]{2})[eE]([0-9]{2}))'
 

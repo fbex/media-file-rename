@@ -2,9 +2,9 @@ from typing import List
 
 import pytest
 
-import rename.media as testee
-from common.model import MediaType, TvMediaItem
-from tmdb.model import TmdbItem, TvEpisode
+import renamedia.rename.media as testee
+from renamedia.common.model import MediaType, TvMediaItem
+from renamedia.tmdb.model import TmdbItem, TvEpisode
 
 
 def test_detect_media_items_empty_filenames():
@@ -102,14 +102,14 @@ def test_enrich_media_items_episode_name_for_empty_input():
 
 @pytest.fixture
 def mock_tmdb_item(mocker, tmdb_item) -> TmdbItem:
-    mocker.patch('tmdb.client.find', return_value=tmdb_item)
+    mocker.patch('renamedia.tmdb.client.find', return_value=tmdb_item)
     return tmdb_item
 
 
 @pytest.fixture
 def mock_tv_episodes(mocker, tv_episodes) -> List[TvEpisode]:
     mocker.patch(
-        'tmdb.client.get_episodes_for_season',
+        'renamedia.tmdb.client.get_episodes_for_season',
         return_value=tv_episodes
     )
     return tv_episodes

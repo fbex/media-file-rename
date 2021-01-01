@@ -2,19 +2,19 @@ from unittest.mock import call
 
 import pytest
 
-import rename.core as testee
+import renamedia.rename.core as testee
 
 
 def test_find_and_rename_media_files(mocker, capsys, tv_media_items):
     files = ['Title.S01E01.mkv', 'Title.S01E02.mkv', 'Title.S01E03.mkv']
-    mocker.patch('rename.io.listdir', return_value=files)
-    mocker.patch('rename.core._should_continue', return_value=True)
+    mocker.patch('renamedia.rename.io.listdir', return_value=files)
+    mocker.patch('renamedia.rename.core._should_continue', return_value=True)
     mocker.patch(
-        'rename.media.detect_media_items',
+        'renamedia.rename.media.detect_media_items',
         return_value=tv_media_items
     )
-    io_chdir = mocker.patch('rename.io.chdir')
-    io_rename = mocker.patch('rename.io.rename')
+    io_chdir = mocker.patch('renamedia.rename.io.chdir')
+    io_rename = mocker.patch('renamedia.rename.io.rename')
 
     testee.find_and_rename_media_files('.')
 
@@ -39,14 +39,14 @@ def test_find_and_rename_media_files_dont_rename(
         mocker, capsys, tv_media_items
 ):
     files = ['Title.S01E01.mkv']
-    mocker.patch('rename.io.listdir', return_value=files)
-    mocker.patch('rename.core._should_continue', return_value=False)
+    mocker.patch('renamedia.rename.io.listdir', return_value=files)
+    mocker.patch('renamedia.rename.core._should_continue', return_value=False)
     mocker.patch(
-        'rename.media.detect_media_items',
+        'renamedia.rename.media.detect_media_items',
         return_value=[tv_media_items[0]]
     )
-    io_chdir = mocker.patch('rename.io.chdir')
-    io_rename = mocker.patch('rename.io.rename')
+    io_chdir = mocker.patch('renamedia.rename.io.chdir')
+    io_rename = mocker.patch('renamedia.rename.io.rename')
 
     testee.find_and_rename_media_files('directory')
 

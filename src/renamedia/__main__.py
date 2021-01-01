@@ -1,14 +1,14 @@
 import sys
 from argparse import ArgumentParser, Namespace
 
-import rename.core
-from common import settings
+from renamedia.common import settings
+from renamedia.rename import core
 
 
 def main():
     args = _parse_arguments()
     settings.VERBOSE_ENABLED = args.verbose
-    rename.core.find_and_rename_media_files(args.directory)
+    core.find_and_rename_media_files(args.directory)
     return 0
 
 

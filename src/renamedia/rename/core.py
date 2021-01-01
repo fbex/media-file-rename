@@ -1,7 +1,7 @@
 from typing import List
 
-from common.model import TvMediaItem
-from rename import io, media
+from renamedia.common.model import TvMediaItem
+from renamedia.rename import io, media
 
 
 def find_and_rename_media_files(directory: str):

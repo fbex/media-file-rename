@@ -15,7 +15,7 @@ To get an API key, simply register an account at https://www.themoviedb.org.
 
 Set up a venv (e.g. with pyenv-virtualenv) and install this package: `pip install .`
 
-Run the module with `python -m rename` or the console script with `media-rename` from within the venv.
+Run the module with `python -m renamedia` or the console script with `renamedia` from within the venv.
 
 ## How to develop
 

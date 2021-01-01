@@ -1,6 +1,6 @@
 from unittest import mock
 
-import rename.io as testee
+import renamedia.rename.io as testee
 
 
 def test_listdir(mocker):
