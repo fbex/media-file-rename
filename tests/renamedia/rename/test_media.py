@@ -74,12 +74,11 @@ def test_enrich_media_items_episode_name_none_for_movie(
         mock_tmdb_item, tv_media_items
 ):
     mock_tmdb_item.type = MediaType.movie
-    media_item = tv_media_items[0]
-    media_item.episode_name = None
+    tv_media_items[0].episode_name = None
 
-    testee._enrich_media_items([media_item])
+    testee._enrich_media_items(tv_media_items)
 
-    assert media_item.episode_name is None
+    assert tv_media_items[0].episode_name is None
 
 
 def test_enrich_media_items_episode_name_for_tv_show(
@@ -93,6 +92,18 @@ def test_enrich_media_items_episode_name_for_tv_show(
     assert tv_media_items[0].episode_name == 'Episode 1'
     assert tv_media_items[1].episode_name == 'Episode 2'
     assert tv_media_items[2].episode_name == 'Episode 3'
+
+
+def test_enrich_media_items_episode_not_found(
+        mock_tmdb_item, mock_tv_episodes, tv_media_items
+):
+    for item in tv_media_items:
+        item.episode_name = None
+        item.episode_number = 99
+
+    testee._enrich_media_items(tv_media_items)
+
+    assert tv_media_items[0].episode_name is None
 
 
 def test_enrich_media_items_episode_name_for_empty_input():

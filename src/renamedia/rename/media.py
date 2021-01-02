@@ -41,15 +41,19 @@ def _enrich_media_items(media_items: List[TvMediaItem]):
             episodes = tmdb_client.get_episodes_for_season(
                 tmdb_item, media_items[0].season_number)
             for item in media_items:
-                item.episode_name = _find_episode_by_number(
-                    int(item.episode_number), episodes).name
+                episode = _find_episode_by_number(
+                    int(item.episode_number),
+                    episodes
+                )
+                if episode:
+                    item.episode_name = episode.name
 
 
 def _find_episode_by_number(
         number: int,
-        tv_episode: List[TvEpisode]
+        tv_episodes: List[TvEpisode]
 ) -> Optional[TvEpisode]:
-    for item in tv_episode:
+    for item in tv_episodes:
         if item.number == number:
             return item
     return None
