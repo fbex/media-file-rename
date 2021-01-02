@@ -2,6 +2,8 @@ import pytest
 import responses
 
 import renamedia.tmdb.client as testee
+from renamedia.common.model import MediaType
+from renamedia.tmdb.model import TmdbItem
 
 _FIND_URL = ('https://api.themoviedb.org/3/search/multi?api_key=12345'
              '&language=en-US&page=1&include_adult=false&query=Title')
@@ -114,6 +116,62 @@ def test_find_multiple_results(mock_env, tv_media_items, tmdb_item):
     actual = testee.find(tv_media_items[0])
 
     assert actual == tmdb_item
+
+
+@responses.activate
+def test_find_other_result_and_continue(mock_env, mocker, tv_media_items):
+    expected = TmdbItem(id=4546, name='Other title', type=MediaType.tv)
+    responses.add(
+        responses.GET,
+        _FIND_URL,
+        json={
+            "page": 1,
+            "total_results": 0,
+            "total_pages": 0,
+            "results": [
+                {
+                    "id": 4546,
+                    "name": "Other title",
+                    "media_type": "tv"
+                }
+            ]
+        },
+        status=200,
+        match_querystring=True
+    )
+    mocker.patch('builtins.input', return_value='y')
+
+    actual = testee.find(tv_media_items[0])
+
+    assert actual == expected
+
+
+@responses.activate
+def test_find_other_result_and_abort(mock_env, mocker, tv_media_items):
+    responses.add(
+        responses.GET,
+        _FIND_URL,
+        json={
+            "page": 1,
+            "total_results": 0,
+            "total_pages": 0,
+            "results": [
+                {
+                    "id": 4546,
+                    "name": "Other title",
+                    "media_type": "tv"
+                }
+            ]
+        },
+        status=200,
+        match_querystring=True
+    )
+    mocker.patch('builtins.input', return_value='n')
+
+    with pytest.raises(SystemExit) as pytest_wrapped_e:
+        testee.find(tv_media_items[0])
+
+    assert pytest_wrapped_e.type == SystemExit
 
 
 @responses.activate

@@ -13,31 +13,44 @@ _TMDB_URL = 'https://api.themoviedb.org/3'
 
 
 def find(media_item: TvMediaItem) -> TmdbItem:
+    tmdb_item = _doFind(media_item.name)
+    if tmdb_item.name != media_item.name:
+        if _should_continue(tmdb_item.name):
+            return tmdb_item
+        sys.exit()  # TODO: Provide custom input for search query...
+    return tmdb_item
+
+
+def _doFind(query: str) -> TmdbItem:
     search_url = '{url}/search/multi'.format(url=_TMDB_URL)
     params = {
         "api_key": _get_api_key(),
         "language": "en-US",
         "page": 1,
         "include_adult": "false",
-        "query": media_item.name
+        "query": query
     }
     response = requests.get(url=search_url, params=params)
     _handle_error(response)
     results = response.json()['results']
-    tmdb_item = _extract_tmdb_item(media_item, results)
-    if tmdb_item.name != media_item.name:
-        print(
-            "No media information found for title [{}]".format(media_item.name)
-        )
-        sys.exit()  # TODO: Provide custom input for search query...
-    return tmdb_item
+    return _extract_tmdb_item(query, results)
 
 
-def _extract_tmdb_item(media_item: TvMediaItem, results: Dict):
+def _should_continue(title: str) -> bool:
+    answer = input(
+        "Found media information for [{}]. Continue? (Y/n): ".format(title)
+    ).lower()
+    if answer == 'n':
+        return False
+    else:
+        return True
+
+
+def _extract_tmdb_item(name: str, results: Dict):
     if len(results) == 0:
         # TODO: Provide custom input for search query...
         raise ValueError(
-            "No media information found for title [{}]".format(media_item.name)
+            "No media information found for title [{}]".format(name)
         )
     tmdb_item = TmdbItem(
         id=results[0]['id'],
