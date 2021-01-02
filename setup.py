@@ -70,7 +70,7 @@ setup(
     tests_require=TESTS_REQUIRE,
     entry_points={
         "console_scripts": [
-            "renamedia = renamedia.__main__:main"
+            "renamedia = renamedia.main:main"
         ]
     },
 )
