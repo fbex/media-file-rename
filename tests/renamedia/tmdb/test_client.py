@@ -9,6 +9,7 @@ _FIND_URL = ('https://api.themoviedb.org/3/search/multi?api_key=12345'
              '&language=en-US&page=1&include_adult=false&query=Title')
 _GET_URL = ('https://api.themoviedb.org/3/tv/4546/season/01'
             '?api_key=12345&language=en-US')
+_QUERY = 'Title'
 
 
 @pytest.fixture
@@ -17,7 +18,7 @@ def mock_env(mocker):
 
 
 @responses.activate
-def test_find_single_result(mock_env, tv_media_items, tmdb_item):
+def test_find_single_result(mock_env, tmdb_item):
     responses.add(
         responses.GET,
         _FIND_URL,
@@ -52,13 +53,13 @@ def test_find_single_result(mock_env, tv_media_items, tmdb_item):
         match_querystring=True
     )
 
-    actual = testee.find(tv_media_items[0])
+    actual = testee.find(_QUERY)
 
     assert actual == tmdb_item
 
 
 @responses.activate
-def test_find_multiple_results(mock_env, tv_media_items, tmdb_item):
+def test_find_multiple_results(mock_env, tmdb_item):
     responses.add(
         responses.GET,
         _FIND_URL,
@@ -113,13 +114,13 @@ def test_find_multiple_results(mock_env, tv_media_items, tmdb_item):
         match_querystring=True
     )
 
-    actual = testee.find(tv_media_items[0])
+    actual = testee.find(_QUERY)
 
     assert actual == tmdb_item
 
 
 @responses.activate
-def test_find_other_result_and_continue(mock_env, mocker, tv_media_items):
+def test_find_other_result_and_continue(mock_env, mocker):
     expected = TmdbItem(id=4546, name='Other title', type=MediaType.tv)
     responses.add(
         responses.GET,
@@ -141,13 +142,13 @@ def test_find_other_result_and_continue(mock_env, mocker, tv_media_items):
     )
     mocker.patch('builtins.input', return_value='y')
 
-    actual = testee.find(tv_media_items[0])
+    actual = testee.find(_QUERY)
 
     assert actual == expected
 
 
 @responses.activate
-def test_find_other_result_and_abort(mock_env, mocker, tv_media_items):
+def test_find_other_result_and_abort(mock_env, mocker):
     responses.add(
         responses.GET,
         _FIND_URL,
@@ -169,13 +170,13 @@ def test_find_other_result_and_abort(mock_env, mocker, tv_media_items):
     mocker.patch('builtins.input', return_value='n')
 
     with pytest.raises(SystemExit) as pytest_wrapped_e:
-        testee.find(tv_media_items[0])
+        testee.find(_QUERY)
 
     assert pytest_wrapped_e.type == SystemExit
 
 
 @responses.activate
-def test_find_no_results(mock_env, tv_media_items):
+def test_find_no_results(mock_env):
     responses.add(
         responses.GET,
         _FIND_URL,
@@ -190,14 +191,14 @@ def test_find_no_results(mock_env, tv_media_items):
     )
 
     with pytest.raises(ValueError) as error:
-        testee.find(tv_media_items[0])
+        testee.find(_QUERY)
 
     assert (error.value.args[0] ==
             'No media information found for title [Title]')
 
 
 @responses.activate
-def test_find_not_found(mock_env, tv_media_items):
+def test_find_not_found(mock_env):
     responses.add(
         responses.GET,
         _FIND_URL,
@@ -211,7 +212,7 @@ def test_find_not_found(mock_env, tv_media_items):
     )
 
     with pytest.raises(ValueError) as error:
-        testee.find(tv_media_items[0])
+        testee.find(_QUERY)
 
     assert (error.value.args[0] ==
             'Error obtaining media information. '

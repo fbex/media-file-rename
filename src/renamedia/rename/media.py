@@ -24,7 +24,7 @@ def detect_media_items(filenames: List[str]) -> List[TvMediaItem]:
     return media_items
 
 
-def _extract_media_item_from_filename(filename: str) -> TvMediaItem:
+def _extract_media_item_from_filename(filename: str) -> Optional[TvMediaItem]:
     media_set = re.search(_media_detection_regex, filename)
     if media_set is not None and len(media_set.groups()) == 2:
         name = media_set.group(0).replace('.', ' ').strip()
@@ -36,7 +36,7 @@ def _extract_media_item_from_filename(filename: str) -> TvMediaItem:
 
 def _enrich_media_items(media_items: List[TvMediaItem]):
     if len(media_items) > 0:
-        tmdb_item = tmdb_client.find(media_items[0])
+        tmdb_item = tmdb_client.find(media_items[0].name)
         if tmdb_item.type is MediaType.tv:
             episodes = tmdb_client.get_episodes_for_season(
                 tmdb_item, media_items[0].season_number)

@@ -6,15 +6,14 @@ import requests
 from requests import Response
 
 from renamedia.common.helpers import verbose_print
-from renamedia.common.model import TvMediaItem
 from renamedia.tmdb.model import MediaType, TmdbItem, TvEpisode
 
 _TMDB_URL = 'https://api.themoviedb.org/3'
 
 
-def find(media_item: TvMediaItem) -> TmdbItem:
-    tmdb_item = _doFind(media_item.name)
-    if tmdb_item.name != media_item.name:
+def find(query: str) -> TmdbItem:
+    tmdb_item = _doFind(query)
+    if tmdb_item.name != query:
         if _should_continue(tmdb_item.name):
             return tmdb_item
         sys.exit()  # TODO: Provide custom input for search query...
