@@ -32,12 +32,11 @@ def test_detect_media_items_enrich_and_sort(
     ('1.S01E01.mkv', '1', '01', '01', 'mkv'),
     ('Title.S01E01.mkv', 'Title', '01', '01', 'mkv'),
     ('Title.So.And.So.S01E01.mkv', 'Title So And So', '01', '01', 'mkv'),
-    ('Title.S10E01.mkv', 'Title', '10', '01', 'mkv'),
+    ('Title.S10E01.mp4', 'Title', '10', '01', 'mp4'),
     ('Title..s01e01.mkv', 'Title', '01', '01', 'mkv'),
     ('Title.S01E10.mkv', 'Title', '01', '10', 'mkv'),
     ('Title.S10E10.mkv', 'Title', '10', '10', 'mkv'),
-    ('A.S01E01.avi', 'A', '01', '01', 'mkv'),
-    ('Title.s01e01', 'Title', '01', '01', 'mkv'),
+    ('A.S01E01.avi', 'A', '01', '01', 'avi')
 ])
 def test_extract_media_item_from_filename(
         filename, title, season, episode, extension

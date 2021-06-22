@@ -6,7 +6,7 @@ import renamedia.tmdb.client as tmdb_client
 from renamedia.common.model import MediaType, TvMediaItem
 from renamedia.tmdb.model import TvEpisode
 
-_media_detection_regex = '.+?(?=.[sS]([0-9]{2})[eE]([0-9]{2}))'
+_media_detection_regex = r'.+?(?=.[sS]([0-9]{2})[eE]([0-9]{2}).*\.(.+))'
 
 
 def detect_media_items(filenames: List[str]) -> List[TvMediaItem]:
@@ -26,12 +26,12 @@ def detect_media_items(filenames: List[str]) -> List[TvMediaItem]:
 
 def _extract_media_item_from_filename(filename: str) -> Optional[TvMediaItem]:
     media_set = re.search(_media_detection_regex, filename)
-    if media_set is not None and len(media_set.groups()) == 2:
+    if media_set is not None and len(media_set.groups()) == 3:
         name = media_set.group(0).replace('.', ' ').strip()
         season = media_set.group(1)
         episode = media_set.group(2)
-        # TODO: detect file extension instead of hard-coding it
-        return TvMediaItem(name, season, episode, 'mkv', filename)
+        extension = media_set.group(3)
+        return TvMediaItem(name, season, episode, extension, filename)
 
 
 def _enrich_media_items(media_items: List[TvMediaItem]):
